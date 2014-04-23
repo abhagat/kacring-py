@@ -31,12 +31,12 @@ class Charge(object):
     kacring = None
 
     def __init__(self, kacring, loc):
-        self.spin = random.choice([-1, 1])
+        self.spin = 1 # random.choice([-1, 1])
         self.kacring = kacring
         self.loc = loc
     
     def rotate(self):
-        self.loc = self.loc + 1 % self.kacring.size
+        self.loc = (self.loc + 1) % self.kacring.size
         if self.kacring.exists_gate_at(self.loc):
             self.flip()
 
@@ -46,6 +46,7 @@ class Charge(object):
 def kac_graph(size, gates):
     kr = KacRing(size, gates)
     results = []
+    time = 0
     while (time < 2*size):
         results.append(kr.net_charge())
         kr.step()
