@@ -46,13 +46,22 @@ class Charge(object):
 def kac_graph(size, gates):
     kr = KacRing(size, gates)
     results = []
+
+    # If gates is even, it deterministically repeats every "size"
+    # amount of steps. If odd, every 2*size. Displaying 2*size number
+    # of steps is redundant for the even case. 
+    if gates % 2 == 1:
+        step_limit = 2*size
+    else:
+        step_limit = size
+
     time = 0
-    while (time < 2*size):
+    while (time < step_limit):
         results.append(kr.net_charge())
         kr.step()
         time += 1
-    plt.scatter(xrange(2*size), results)
+    plt.plot(xrange(2*size), results)
     plt.show()
 
 if __name__ == "__main__":
-    kac_graph(10, 4)
+    kac_graph(1000, 67)
